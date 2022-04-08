@@ -1,0 +1,42 @@
+#include <iostream>
+
+
+using namespace std;
+int main()
+{
+	int T;
+	cin >> T;
+	for (int i = 0; i < T; i++)
+	{
+		string temp;
+		cin >> temp;
+		
+		string tempslice;
+		int score=0;
+		while (temp.find("X") != string::npos)
+		{
+			tempslice = temp.substr(0, temp.find("X"));
+			int n = tempslice.length();
+			score += n * (n + 1) / 2;   //초항이 1, 등차가 1인 등차수열의 합 공식 적용
+
+			temp = temp.substr(temp.find("X"));
+			if (temp.find("O") != string::npos)	//마지막에 x밖에 없을때 아래 함수가 처리되지 않을 것을 대비한 if문
+			{
+				temp = temp.substr(temp.find("O"));
+			}
+			if (temp.find("O") == string::npos)	//마지막에 X밖에 안남았을 때 while문 무한루프를 깨주는 처리
+				break;
+		}
+		if (temp.find("O") != string::npos)	//마지막에 남은 temp가 x밖에 없을 때 score에 반영되지 않게 하는 처리
+		{
+			int n = temp.length();
+			score += n * (n + 1) / 2;
+		}
+		cout << score<<endl;	
+	}
+}
+
+
+//문제리뷰
+//배열을 구분자로 자르는 실습때 했던 방법(temp.find()와 temp.substr()사용)에 기초해서 풀이했다.
+//해당 실습보다 다른점이 많아서 예외처리가 계속 추가됐다. 그래서 if문이 계속 늘어나 지저분하다..
